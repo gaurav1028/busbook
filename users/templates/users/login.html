@@ -1,0 +1,68 @@
+{% extends "bus/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<header class="site-title color">
+			<div class="wrap">
+				<div class="container">
+					<h1>Login</h1>
+					<nav role="navigation" class="breadcrumbs">
+						<ul>
+							<li><a href="{% url 'bus-home' %}" title="Home">Home</a></li>
+							<li>Login</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<!-- //Page info -->
+		
+		<div class="wrap">
+			<div class="row">
+				<!--- Content -->
+				<div class="content one-half modal">
+					{% if messages %}
+						{% for message in messages %}
+						<div class="alert alert-{{ message.tags }}">
+							{{ message }}
+						</div>
+						{% endfor %}
+					{% endif %}
+					<!--Login-->
+					<div class="box">
+						<form method="POST">
+							{% csrf_token %}
+							{{ form|crispy }}
+							<!-- <div class="f-row">
+								<div class="full-width">
+									<label for="username">Your username</label>
+									<input type="text" id="username" />
+								</div>
+							</div>
+							<div class="f-row">
+								<div class="full-width">
+									<label for="password">Your password</label>
+									<input type="password" id="password" />
+								</div>
+							</div>
+							<div class="f-row">
+								<div class="full-width check">
+									<input type="checkbox" id="checkbox" />
+									<label for="checkbox">Remember me next time</label>
+								</div>
+							</div> -->
+							<br>
+							<div class="f-row">
+								<div class="full-width">
+									<input type="submit" value="Login" class="btn color medium full" />
+								</div>
+							</div>
+							
+							<p>Dont have an account yet? <a href="{% url 'register' %}">Sign up</a>.</p>
+						</form>
+					</div>
+					<!--//Login-->
+				</div>
+				<!--- //Content -->
+			</div>
+		</div>
+{% endblock content %}

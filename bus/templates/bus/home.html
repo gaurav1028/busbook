@@ -1,0 +1,64 @@
+{% extends "bus/base.html" %}
+{% block content %}
+<div class="intro">
+      <div class="wrap">
+        <div class="textwidget">
+          <h1 class="wow fadeInDown"></h1>
+          <h2 class="wow fadeInUp">Coming Through A Town Near You</h2>
+          <div class="actions">
+            <a href="#booking" title="Make a booking" class="btn large color wow fadeInRight anchor">Make a booking</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- //Intro -->
+    
+    <!-- Search -->
+    <div class="advanced-search color" id="booking">
+      <div class="wrap">
+        <form role="form" action="{% url 'bus-search' %}" >
+
+          <!-- Row -->
+          <div class="f-row">
+            <div class="form-group datepicker one-third">
+              <label for="dep-date">Departure date and time</label>
+              <input type="text" id="dep-date" autocomplete="off" required="" name="travel_date" />
+            </div>
+            <div class="form-group select one-third">
+              <label>Pick up location</label>
+              <select required="" name="source_location">
+                <option>Select location</option>
+                {% for busstop in busStops %}
+                <option value="{{ busstop.name }}">{{ busstop.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group select one-third">
+              <label>Drop off location</label>
+              <select required="" name="destination_location">
+                <option>Select location</option>
+                {% for busstop in busStops %}
+                <option value="{{ busstop.name }}">{{ busstop.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <!-- //Row -->
+          
+          <!-- Row -->
+          <div class="f-row">
+          </div>
+          <!-- //Row -->
+          
+          <!-- Row -->
+          <div class="f-row">
+            <div class="form-group right">
+              <button type="submit" class="btn large black">Search Now</button>
+            </div>
+            
+          </div>
+          <!--// Row -->
+        </form>
+      </div>
+    </div>
+{% endblock content %}

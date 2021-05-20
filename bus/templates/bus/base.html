@@ -1,0 +1,121 @@
+{% load static %}
+{% load template_tag %}
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="keywords" content="THEMELOCK.COM - Private Transport and Car Hire HTML Template" />
+  <meta name="description" content="THEMELOCK.COM - Private Transport and Car Hire HTML Template">
+  <meta name="author" content="themeenergy.com">
+  
+  <title>Bus Ride</title>
+  
+  <link rel="stylesheet" href="{% static 'css/theme-pink.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,500,600,700|Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+
+<style>
+        .seat {
+            height: 30px;
+            width: 30px;
+            border: 1px solid gray;
+           cursor:pointer;
+           background-color:white;
+        }
+        .booked {
+            height: 30px;
+            width: 30px;
+            border: 1px solid gray;
+           cursor:pointer;
+           background-color:gray;
+        }
+        .walk{
+            padding-left:20px;
+        }
+        #driver {
+            background-color:gray;          
+            height: 30px;
+            border-radius: 50%;
+        }
+
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body class="home">
+    <!-- Header -->
+    <header class="header" role="banner">
+      <div class="wrap">
+        <!-- Logo -->
+        <div class="logo">
+          <a href="{% url 'bus-home' %}" title="BusRide"><img src="{% static 'images/1.png' %}" alt="BusRide" /></a>
+        </div>
+        <!-- //Logo -->
+        
+        <!-- Main Nav -->
+        <nav role="navigation" class="main-nav">
+          <ul>
+            <li class="active"><a href="{% url 'bus-home' %}" title="">Home</a></li>
+            </li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'manage-booking' %}" >Manage Bookings</a></li>
+            <li><a href="{% url 'logout' %}" title="Logout">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}" title="Login">Login</a></li>
+            <li><a href="{% url 'register' %}" title="Register">Register</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+        <!-- //Main Nav -->
+      </div>
+    </header>
+    <main class="main" role="main">
+  {% block content %}{% endblock %}
+</main>
+  <footer class="footer black" role="contentinfo">
+    <div class="wrap">
+      <div class="row">
+        <!-- Column -->
+        <article class="one">
+          <h6>About us</h6>
+          <p>Bus Ride is an online bus ticketing platform that has transformed bus travel by bringing ease and convenience to people who travel using buses.<br>By providing widest choice, superior customer service, lowest prices and unmatched benefits, BusRide has served over million customers.</p>
+        </article>
+        
+      </div>
+      
+      
+    </div>
+  </footer>
+  <!-- //Footer -->
+  
+  <!-- Preloader -->
+  <div class="preloader">
+    <div id="followingBallsG">
+      <div id="followingBallsG_1" class="followingBallsG"></div>
+      <div id="followingBallsG_2" class="followingBallsG"></div>
+      <div id="followingBallsG_3" class="followingBallsG"></div>
+      <div id="followingBallsG_4" class="followingBallsG"></div>
+    </div>
+  </div>
+  <!-- //Preloader -->
+  
+   <!-- jQuery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/jquery.uniform.min.js' %}"></script>
+  <script src="{% static 'js/jquery.datetimepicker.js' %}"></script>
+  <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+  <script src="{% static 'js/wow.min.js' %}"></script>
+  <script src="{% static 'js/search.js' %}"></script>
+  <script src="{% static 'js/scripts.js' %}"></script>
+  
+  </body>
+</html>

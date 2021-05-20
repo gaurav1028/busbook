@@ -1,0 +1,73 @@
+{% extends "bus/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<header class="site-title color">
+			<div class="wrap">
+				<div class="container">
+					<h1>Register</h1>
+					<nav role="navigation" class="breadcrumbs">
+						<ul>
+							<li><a href="{% url 'bus-home' %}" title="Home">Home</a></li>
+							<li>Register</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<!-- //Page info -->
+		
+		<div class="wrap">
+			<div class="row">
+				<!--- Content -->
+				<div class="content one-half modal">
+					<!--Login-->
+					<div class="box">
+						<form method="POST">
+							{% csrf_token %}
+							{{ form|crispy }}
+							<!-- <div class="f-row">
+								<div class="full-width">
+									<label for="username">Your username</label>
+									<input type="text" id="username" />
+								</div>
+							</div>
+							<div class="f-row">
+								<div class="full-width">
+									<label for="email">Your email address</label>
+									<input type="email" id="email" />
+								</div>
+							</div>
+							
+							<div class="f-row">
+								<div class="full-width">
+									<label for="password">Your password</label>
+									<input type="password" id="password" />
+								</div>
+							</div>
+							<div class="f-row">
+								<div class="full-width">
+									<label for="password2">Repeat password</label>
+									<input type="password" id="password2" />
+								</div>
+							</div>
+							<div class="f-row">
+								<div class="full-width check">
+									<input type="checkbox" id="checkbox" />
+									<label for="checkbox">I agree with terms and conditions.</label>
+								</div>
+							</div> -->
+							<div class="f-row">
+								<div class="full-width">
+									<input type="submit" value="Create an account" class="btn color medium full" />
+								</div>
+							</div>
+							
+							<p>Already have an account? <a href="{% url 'login' %}">Login</a>.</p>
+						</form>
+					</div>
+					<!--//Login-->
+				</div>
+				<!--- //Content -->
+			</div>
+		</div>
+{% endblock content %}

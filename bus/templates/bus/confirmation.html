@@ -1,0 +1,87 @@
+{% extends "bus/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<br><p><br><br></p>
+
+<main class="main" role="main">
+<!-- Search -->
+<div class="output color twoway">
+			<div class="wrap">
+				<div>
+					<p>At {{ Bus.schedule.departure_time }}</p>
+					<p>{{ Bus.schedule.bus.route.source }}<small> to </small>{{ Bus.schedule.bus.route.destination }}</p>
+				</div>
+				
+			</div>
+		</div>
+<!-- //Search -->
+
+<div class="wrap">
+<div class="row">
+<!--- Content -->
+<div class="full-width content">
+<h2>Passenger details</h2>
+<p>Please ensure all of the required fields are completed at the time of booking. This information is imperative to ensure a smooth journey.<br />All fields are required.</p>
+</div>
+<!--- //Content -->
+
+<div class="three-fourth">
+<form method="POST">
+{% csrf_token %}
+{{ form|crispy }}<br>
+<div>
+<button class="btn medium color right" type="submit">Confirm</button>
+</div>
+</form>
+</div>
+
+<!--- Sidebar -->
+<aside class="one-fourth sidebar right">
+					<!-- Widget -->
+					<div class="widget">
+						<h4>BOOKING DETAILS</h4>
+						<div class="summary">
+							<div>
+								<h5>DEPARTURE</h5>
+								<dl>
+									<dt>Date</dt>
+									<dd>{{ Bus.schedule.departure_time }}</dd>							
+									<dt>From</dt>
+									<dd>{{ Bus.schedule.bus.route.source }}</dd>
+									
+								</dl>
+							</div>
+
+							<div>
+								<h5>ARRIVAL</h5>
+								<dl>
+									<dt>Date</dt>
+									<dd>{{ Bus.schedule.arrival_time }}</dd>
+									<dt>To</dt>
+									<dd>{{ Bus.schedule.bus.route.destination }}</dd>
+								</dl>
+							</div>
+							
+							<div>
+								<h5>BOOKINGS</h5>
+								<dl>
+									<dt>Seats</dt>
+									<dd>{{ Bus.seatNos }}</dd>
+									
+								
+								</dl>
+							</div>
+
+							<dl class="total">
+								<dt>Total</dt>
+								<dd>{{ Bus.price }}INR</dd>
+							</dl>
+						</div>
+					</div>
+					<!-- //Widget -->
+				</aside>
+<!--- //Sidebar -->
+</div>
+</div>
+</main>
+{% endblock content %}

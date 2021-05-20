@@ -1,0 +1,65 @@
+{% extends "bus/base.html" %}
+{% load template_tag %}
+{% block content %}
+<br><p><br><br></p>
+
+<main class="main" role="main">
+
+		<header class="site-title color">
+			<div class="wrap">
+				<div class="container">
+					<h1>Manage Bookings</h1>
+					
+				</div>
+			</div>
+		</header>
+
+		
+		
+		<div class="wrap">
+			<div class="row">
+
+				{% if bool %}
+					<div class="container">
+						<h1>No Tickets Booked</h1>
+					</div>
+				{% else %}
+
+				{% for ticket in tickets %}
+				<div class="one-half content">
+					<div class="row">
+						<!-- Post -->
+						<div class="full-width">
+							<article class="hentry">
+								<div class="entry-featured">
+									<div class="overlay">
+										<a href="" class="expand">+</a>
+									</div>
+								</div>
+								<div class="entry-content">
+									<h2><a href=""><b>{{ ticket.schedule.bus.route.source}}-{{ ticket.schedule.bus.route.destination}}</b></a></h2>
+									<h3>Number Plate : {{ ticket.schedule.bus.num_plate }}</h3>
+									<h3>Departure Time : {{ ticket.schedule.departure_time}}</h3>
+									<h3> Arrival Time: {{ ticket.schedule.arrival_time }} </h3>
+									<h3>Seats Booked: {{ ticket.seatNos }}</h3>
+									<h3>Total Amount: {{ ticket.price }} INR</h3>
+									<h3>Booking Date : {{ ticket.timestamp }}</h3>
+									<a class="btn medium color " href = "{% url 'pdf-ticket' ticket.id %}">Download PDF</a>
+									{% comment %} {{ ticket.timestamp|plus_days:7 }}
+									{{ time }} {% endcomment %}
+									{% if time < ticket.schedule.departure_time|subtract_days:1  %}
+										<a class="btn medium color " href = "{% url 'cancel-ticket' ticket.id %}">Cancel Booking</a>
+									{% endif %}
+								</div>
+							</article>
+						</div>
+					</div>	
+				</div>
+				{% endfor %}
+				{% endif %}
+
+
+			</div>
+		</div>
+	</main>
+{% endblock content %}

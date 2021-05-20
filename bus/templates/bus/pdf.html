@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Ticket No-{{ ticket.id }}</title>
+    </head>
+    <body>
+        <h1 style="color:gray">Passenger Details</h1>
+        <h2>First Name : {{ passenger.firstname }}</h2>
+        <h2>Last Name : {{ passenger.lastname }}</h2>
+        <h2>Mobile Number: {{ passenger.mobile_number }} </h2>
+        <hr>
+        <h1  style="color:gray" >Bus Details</h1>
+        <h2>From {{ ticket.schedule.bus.route.source}} To {{ ticket.schedule.bus.route.destination}}</h2>
+        <h2>Number Plate : {{ ticket.schedule.bus.num_plate }}</h2>
+        <h2>Departure Time : {{ ticket.schedule.departure_time}}</h2>
+        <h2> Arrival Time: {{ ticket.schedule.arrival_time }} </h2>
+        <hr>
+        <h1 style="color:gray">Ticket Details</h1>
+        <h2>Seats Booked: {{ ticket.seatNos }}</h2>
+        <h2>Total Amount: {{ ticket.price }} INR</h2>
+        <h2>Booking Date : {{ ticket.timestamp }}</h2>   
+        <hr>
+        <h1 align="center">HAPPY JOURNEY :)</h1>             
+    </body>
+</html>

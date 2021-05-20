@@ -1,0 +1,168 @@
+{% extends "bus/base.html" %}
+{% block content %}
+<br><p><br><br></p>
+<main class="main" role="main">
+		<!-- Search -->
+		<div class="output color twoway">
+			<div class="wrap">
+				<div>
+					<p>At {{ BusSchedule.departure_time }}</p>
+					<p>{{ BusSchedule.bus.route.source }}<small> to </small>{{ BusSchedule.bus.route.destination }}</p>
+				</div>
+				
+			</div>
+		</div>
+		<!-- //Search -->
+		
+		<div class="wrap">
+			<div class="row">
+				<!--- Content -->
+				<div class="full-width content">
+					<h2>Select Seat and No.of Passengers </h2>
+					<p>Please select the total number of pieces of baggage and extras for your transfers. If you arrive with more luggage than specified at booking, we cannot guarantee to transport them. In case we are able to transport them, we will charge you an additional fee.</p>
+				</div>
+				<div class="one-fourth heightfix">
+				<p></p><br><br><br>
+				<div class="seat" id="tp"></div> <h3>Available</h3>
+				<br>
+				<div class="seat booked" ></div>
+					<h3>Booked</h3></div>
+				<div class="one-half heightfix">
+				
+				{% csrf_token %}
+					<table>
+            		<tr>
+                <td colspan="3"></td>
+                <td align="right"> <div id="driver"></div> </td>
+            </tr>
+			
+			{% for seat in seats %}
+			<tr>
+				{% for i in seat %}
+					{% if i != '*'%}
+						
+						<td align="center" ><div class="seat" ></div> {{ i }} </td>
+					{% else %}
+						<td align="center"><div class="seat booked" ></div> {{ i }} </td>
+					{% endif %} 
+				{% endfor %}
+			</tr>
+			{% endfor %}
+
+       				</table>
+					   <div align='center'><button type="submit" class="btn large black" id="bookNow">Book Now</button></div>
+					   
+					
+       				 
+				</div>
+				<aside class="one-fourth sidebar right">
+					<!-- Widget -->
+					<div class="widget">
+						<h4>Bus summary</h4>
+						<div class="summary">
+							<div>
+								<h5>DEPARTURE</h5>
+								<dl>
+									<dt>Date</dt>
+									<dd>{{ BusSchedule.departure_time }}</dd>							
+									<dt>From</dt>
+									<dd>{{ BusSchedule.bus.route.source }}</dd>
+									
+								</dl>
+							</div>
+
+							<div>
+								<h5>ARRIVAL</h5>
+								<dl>
+									<dt>Date</dt>
+									<dd>{{ BusSchedule.arrival_time }}</dd>
+									<dt>To</dt>
+									<dd>{{ BusSchedule.bus.route.destination }}</dd>
+								</dl>
+							</div>
+							
+							<div>
+								<h5>DETAILS</h5>
+								<dl>
+									<dt>Capcity</dt>
+									<dd>{{ BusSchedule.bus.capacity }}</dd>
+									<dt>Num Plate</dt>
+									<dd>{{ BusSchedule.bus.num_plate }}</dd>
+								
+								</dl>
+							</div>
+
+							<dl class="total">
+								<dt>Per</dt>
+								<dd>{{ BusSchedule.price }}INR</dd>
+							</dl>
+						</div>
+					</div>
+					<!-- //Widget -->
+				</aside>
+			
+				<!--- //Content -->
+				
+				
+				<!--- //Sidebar -->
+			</div>
+		</div>
+	</main>
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+		func = function () {
+                var bgclr = this.style.backgroundColor;
+				console.log(seat.innerHTML);
+                if(bgclr =='crimson'){
+					this.style.backgroundColor = 'white';
+				}
+                else{		
+					this.style.backgroundColor = 'crimson';
+				}
+                   
+            };
+        allSeats = document.querySelectorAll('.seat');
+        for (var i = 0; i < allSeats.length; i++) {
+            var seat = allSeats[i];	
+				seat.addEventListener('click', func, false);   
+        }
+        
+		bookedSeats = document.querySelectorAll('.booked');
+		for (var i = 0; i < bookedSeats.length; i++) {
+            var seat = bookedSeats[i];	
+			seat.removeEventListener('click', func);   
+        }
+		document.getElementById('tp').removeEventListener('click', func); 
+		btn = document.getElementById('bookNow');
+		btn.addEventListener('click',function(){
+			allSeats = document.querySelectorAll('.seat');
+			var seatsBooked = ''
+			for (var i = 0; i < allSeats.length; i++) {
+            var seat = allSeats[i];
+			if(seat.style.backgroundColor == 'crimson')
+				seatsBooked = seatsBooked.concat(i-1,',')
+			}
+
+			console.log(seatsBooked);
+			var token = '{{csrf_token}}';
+			$.ajax({
+			headers: { "X-CSRFToken": token },
+            type: 'POST',
+            url: "{% url 'bus-book' %}",
+            data: {"seats": seatsBooked,"bus":{{ BusSchedule.id }},},
+            success: function (response) {
+				location.href = "{% url 'bus-confirmation'  %}"
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+		},false);
+		
+	
+    </script>
+	<script>
+
+	</script>
+{% endblock content %}
+

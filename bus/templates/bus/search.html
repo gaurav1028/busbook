@@ -1,0 +1,116 @@
+{% extends "bus/base.html" %}
+{% block content %}
+<br><p><br><br></p>
+<div class="advanced-search color">
+			<div class="wrap">
+				<form role="form" action="{% url 'bus-search' %}">
+					<!-- Row -->
+					<div class="f-row">
+						<div class="form-group datepicker one-third">
+							<label for="dep-date">Departure date and time</label>
+							<input type="text" id="dep-date" value="{{ convert_to_date }}" name="travel_date" required=""/>
+						</div>
+						<div class="form-group select one-third">
+							<label>Pick up location</label>
+							<select name="source_location" required="">
+								<option>{{search_source_location}}</option>
+								{% for busstop in busStops %}
+									{% if search_source_location is not busStop.name %}
+                						<option value="{{ busstop.name }}">{{ busstop.name }}</option>
+                					{% endif %}
+                				{% endfor %}
+							</select>
+						</div>
+						<div class="form-group select one-third">
+							<label>Drop off location</label>
+							<select name="destination_location" required="">
+								<option>{{search_destination_location}}</option>
+								{% for busstop in busStops %}
+									{% if search_destination_location is not busStop.name %}
+                						<option value="{{ busstop.name }}">{{ busstop.name }}</option>
+                					{% endif %}
+                				{% endfor %}
+							</select>
+						</div>
+					</div>
+					<!-- //Row -->
+					
+					<!-- Row -->
+					<div class="f-row">
+						
+					</div>
+					<!-- //Row -->
+					
+					<!-- Row -->
+					<div class="f-row">
+						<div class="form-group right">
+							<button type="submit" class="btn large black">Search Now</button>
+						</div>
+						
+					</div>
+					<!--// Row -->
+				</form>
+			</div>
+		</div>
+		<!-- //Search -->
+		
+		<div class="wrap">
+			<div class="row">
+				<!--- Content -->
+				<div class="full-width content">
+					{% if buses %}
+					<br><h2> {{buses|length}} buses found </h2>
+					{% endif %}
+					<div class="results">
+						{% if no_scheduled_bus_message %}
+						<h2>{{no_scheduled_bus_message}}</h2>
+						{% endif %}
+						{% if no_route_message %}
+						<h2>{{no_route_message}}</h2>
+						{% endif %}
+						<!-- Item -->
+						{% if buses %}
+							{% for bus in buses %}
+							<article class="result">
+								<div class="one-half heightfix">
+									<h3>{{ search_source_location }}-{{ search_destination_location }}</h3>
+									<ul>
+										<li>
+											<span class="ico people"></span>
+											<p>Capacity<strong>{{ bus.bus.capacity }}</strong> <br />per vehicle</p>
+										</li>
+										<li>
+											<span class="ico time"></span>
+											<p>Departure Time:<strong>{{ bus.departure_time }}</strong></p>
+											<p>Arrival Time:<strong>{{ bus.arrival_time }}</strong></p>
+										</li>
+										<li>
+											<span class="ico time"></span>
+											<p>Duration <br /><strong>{{ bus.departure_time|timesince:bus.arrival_time }}</strong></p>
+										</li>
+
+									</ul>
+								</div>
+								<div class="one-fourth heightfix">
+									<div>
+										<div class="price">{{ bus.price }}<small>INR</small></div>
+										<span class="meta">per passenger</span>
+										<a href="{% url 'bus-details' bus.id %}" class="btn grey large">BOOK NOW</a>
+									</div>
+								</div>
+						</article>
+						<!-- //Item -->
+							{% endfor %}
+						{% endif %}
+						<!-- Item -->
+						
+						<!-- //Item -->
+						
+						<!-- Item -->
+						<!-- //Item -->
+					</div>
+				</div>
+				<!--- //Content -->
+			</div>
+		</div>
+		{% endblock content %}
